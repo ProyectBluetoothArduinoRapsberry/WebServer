@@ -15,11 +15,16 @@ const wss = new SocketServer({ server });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  ws.on('message', function (message) {
+    console.log('received: %s', message)
+  });
   ws.on('close', () => console.log('Client disconnected'));
 });
 
+
+
 setInterval(() => {
   wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
+    client.send(new Date().toTimeString() + "test");
   });
 }, 1000);
