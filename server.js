@@ -1,11 +1,16 @@
+'use strict';
 
 // Authentication module.
 const http = require('http');
 const WebSocket = require('ws');
+const express = require('express');
 var auth = require('http-auth');
 var fs = require('fs');
 var xml2js = require('xml2js');
 var url = require('url');
+
+const PORT = process.env.PORT || 3000;
+
 
 
 const wssRasp = new WebSocket.Server({ noServer: true });
@@ -77,4 +82,4 @@ server.on('upgrade', function upgrade(request, socket, head) {
   }
 });
 
-server.listen(6868);
+server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
