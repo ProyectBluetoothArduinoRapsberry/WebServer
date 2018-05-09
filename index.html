@@ -1,6 +1,84 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Sistema de control</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon" href="images/favicon.png" type="image/x-icon"/>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>		
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+		    			
+		<link rel="stylesheet" type="text/css" href="css/sistemaControl.css">
+	</head>
+	
   <body>
-    <p id='server-time'></p>
+	<div class="container">
+	 
+	 <div class="row">
+		<div class="col">
+		  <h1 class="text-center text-white" style="color: white;">Sistema de control</h1>		  
+		</div>
+	  </div>
+	  <br>
+	  
+	 <div class="row">
+		<div class="col-2">
+		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h3>Bomba</h3></label>
+		</div>  		
+	  </div>
+	  
+	 <div class="row">
+		<div class="col-2">
+		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h3>Valvula 1</h3></label>
+		</div>  		
+	  </div>
+
+	 <div class="row">
+		<div class="col-2">
+		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h3>Valvula 2</h3></label>
+		</div>  		
+	  </div>
+
+	 <div class="row">
+		<div class="col-2">
+		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h3>Valvula 3</h3></label>
+		</div>  		
+	  </div>	
+
+	 <div class="row">
+		<div class="col-2">
+		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h3>Modo manual</h3></label>
+		</div>  		
+	  </div>	  
+	  
+	
+		
+	
+	
+		<p id='server-time'></p>
+		  <!-- Content here -->
+	</div> 
     <script>
       var HOST = "ws://192.168.0.17:1337/cliente";
       var ws = new WebSocket("ws://192.168.0.17:1337/client");
