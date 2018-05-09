@@ -42,12 +42,9 @@ var basic = auth.basic({realm: "Sistema Control."}, (username, password, callbac
           parser.parseString(data, function (err, result) {
             authenticated = false;
             result.users.user.forEach(function(element) {
-              console.log(element.username[0] + "   " + element.password[0])
               authenticated = authenticated || (username === element.username[0] && password === element.password[0]);
             });
-
           });
-
           callback(authenticated);
       });
 
@@ -80,4 +77,4 @@ server.on('upgrade', function upgrade(request, socket, head) {
   }
 });
 
-server.listen(1337);
+server.listen(80);
