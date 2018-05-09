@@ -18,7 +18,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>		
 		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-		    			
+		<script src="scripts/sistemaControl.js"></script>		 	
 		<link rel="stylesheet" type="text/css" href="css/sistemaControl.css">
 	</head>
 	
@@ -34,18 +34,18 @@
 	 <div class="row">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-4">
-		  <button type="button" class="btn btn-primary disabled" style="float: right;">Distancia: <span class="badge">7</span></button>
+		  <button id="distancia" type="button" class="btn btn-primary disabled" style="float: right;">Distancia: <span class="badge">7</span></button>
 		</div> 
 		<div class="col-xs-4">
-		  <button type="button" class="btn btn-primary disabled" style="float: left;">Duración: <span class="badge">7</span></button>
+		  <button id="duracion" type="button" class="btn btn-primary disabled" style="float: left;">Duración: <span class="badge">7</span></button>
 		</div>  
 		<div class="col-xs-2"></div> 		
 	  </div>	 
 	  <br>	  
 	 	 
 	 <div class="row">
-		<div class="col-xs-6">
-		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		<div class="col-xs-6">			
+		  <input id="bomba"type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal" disabled>
 		  <span style="display:inline-block; width: 5px;"></span>
 		  <label class="text-center" style="color: white;"><h4>Bomba</h4></label>
 		</div>  
@@ -68,7 +68,7 @@
 	  
 	 <div class="row">
 		<div class="col-xs-6">
-		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <input id="valvula1" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal" disabled><tr>
 		  <span style="display:inline-block; width: 5px;"></span>
 		  <label class="text-center" style="color: white;"><h4>Valvula1</h4></label>
 		</div>  		
@@ -76,7 +76,7 @@
 
 	 <div class="row">
 		<div class="col-xs-6">
-		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <input id="valvula2" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal" disabled><tr>
 		  <span style="display:inline-block; width: 5px;"></span>
 		  <label class="text-center" style="color: white;"><h4>Valvula2</h4></label>
 		</div>  		
@@ -84,7 +84,7 @@
 
 	 <div class="row">
 		<div class="col-xs-6">
-		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <input id="valvula3" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal" disabled><tr>
 		  <span style="display:inline-block; width: 5px;"></span>
 		  <label class="text-center" style="color: white;"><h4>Valvula3</h4></label>
 		</div>  		
@@ -92,11 +92,19 @@
 
 	 <div class="row">
 		<div class="col-xs-6">
-		  <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
+		  <input id="manual" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal"><tr>
 		  <span style="display:inline-block; width: 5px;"></span>
 		  <label class="text-center" style="color: white;"><h4>Manual</h4></label>
 		</div>  		
 	  </div>	  
+	  
+	 <div class="row">
+		<div class="col-xs-6">
+		  <input id="servidor" type="checkbox" checked data-toggle="toggle" data-style="ios" data-size="normal" disabled><tr>
+		  <span style="display:inline-block; width: 5px;"></span>
+		  <label class="text-center" style="color: white;"><h4>Servidor</h4></label>
+		</div>  		
+	  </div>		  
 	  
 	
 		
@@ -105,7 +113,7 @@
 		<p id='server-time'></p>
 		  <!-- Content here -->
 	</div> 
-    <script>
+    <!--<script>
       var HOST = "ws://192.168.0.17:1337/cliente";
       var ws = new WebSocket("ws://192.168.0.17:1337/client");
       var el = document.getElementById('server-time');
@@ -113,6 +121,6 @@
       ws.onmessage = function (event) {
         el.innerHTML = 'Server time: ' + event.data;
       };
-    </script>
+    </script>-->
   </body>
 </html>
