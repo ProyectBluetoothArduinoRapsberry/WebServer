@@ -24,22 +24,20 @@ wssRasp.on('connection', function connection(wsr) {
   wsr.on('message', function incoming(message) {
       wssClient.clients.forEach(function each(ws) {
         ws.send(message);
+        console.log('received: %s', message);
       });
-
-      wssRasp.clients.forEach(function each(ws) {
-        ws.send(message);
-      });
-    console.log('received: %s', message);
+      console.log('received: %s', message);
+  });
+  wssClient.on('message', function incoming(message) {
+    wssRasp.clients.forEach(function each(ws) {
+      ws.send(message);
+    });
   });
 });
 
-wssClient.on('connection', function connection(wsc) {
-  wsc.on('message', function incoming(message) {
-      wssRasp.clients.forEach(function each(ws) {
-        ws.send(message);
-      });
-  });
-});
+
+
+
 
 var parser = new xml2js.Parser();
 var basic = auth.basic({realm: "Sistema Control."}, (username, password, callback) => {
@@ -58,15 +56,51 @@ var basic = auth.basic({realm: "Sistema Control."}, (username, password, callbac
 
 // Creating new HTTP server.
 const server = http.createServer(basic, (req, res) => {
-  fs.readFile('index.html', function(err, data) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(data);
-    res.end();
-  });
+  if(req.url.indexOf('index.html') != -1){ //req.url has the pathname, check if it conatins '.html'
+    fs.readFile('index.html', function(err, data) {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write(data);
+      res.end();
+    });
+  }
+
+  if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
+
+    fs.readFile(__dirname + '/public/scripts/sistemaControl.js', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'text/javascript'});
+      res.write(data);
+      res.end();
+    });
+
+  }
+
+  if(req.url.indexOf('.css') != -1){ //req.url has the pathname, check if it conatins '.css'
+
+    fs.readFile(__dirname + '/public/css/sistemaControl.css', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'text/css'});
+      res.write(data);
+      res.end();
+    });
+
+  }
+
+  if(req.url.indexOf('favicon.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+
+    fs.readFile(__dirname + '/public/images/favicon.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+
+  }
+
 
 });
 
-server.on('upgrade', function upgrade(request, socket, head) {
+server.on('upgrade', function upgrasde(request, socket, head) {
   const pathname = url.parse(request.url).pathname;
 
   if (pathname === '/rasp') {

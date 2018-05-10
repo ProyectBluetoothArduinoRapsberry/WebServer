@@ -1,6 +1,6 @@
 {
-  "name": "Node.js WebSocket Example",
-  "description": "Part of the Using WebSockets on Heroku Tutorial",
+  "name": "Sistema de control",
+  "description": "Sistema de control para control de aguas lluvias",
   "repository": "https://github.com/heroku-examples/node-websockets",
   "keywords": ["node", "websocket"]
 }
