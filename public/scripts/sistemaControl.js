@@ -1,18 +1,7 @@
 var estados = {"distancia":0, "duracion":1, "trig":2, "eco":3, "bomba":4, "valvula1":5, "valvula2":6, "valvula3":7, "manual":8};
 
-if($('#manual').is(':checked')){
-	$('#bomba').bootstrapToggle('enable');
-	$('#valvula1').bootstrapToggle('enable');
-	$('#valvula2').bootstrapToggle('enable');
-	$('#valvula3').bootstrapToggle('enable');
-}else{
-	$('#bomba').bootstrapToggle('disable');
-	$('#valvula1').bootstrapToggle('disable');
-	$('#valvula2').bootstrapToggle('disable');
-	$('#valvula3').bootstrapToggle('disable');
-}
 
-var HOST = "ws://sistemacontrol.herokuapp.com/cliente";
+var HOST = "ws://sistemacontrol.herokuapp.com/client";
 var ws = new WebSocket(HOST);
 
 var el = document.getElementById('messages');
