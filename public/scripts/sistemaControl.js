@@ -1,8 +1,10 @@
 var estados = {"distancia":0, "duracion":1, "trig":2, "eco":3, "bomba":4, "valvula1":5, "valvula2":6, "valvula3":7, "manual":8};
 var letraComando = {"bomba":'a', "valvula1":'b', "valvula2":'c', "valvula3":'d', "manual":'e'};
-var raspberryCommand = {"bomba":'Bomba', "valvula1":'Valvula1', "valvula2":'Valvula2', "valvula3":'Valvula3', "manual":'ModoManual'};
+var raspberryCommand = {"bomba":'Bomba', "valvula1":'Valvula1', "valvula2":'Valvula2', "valvula3":'Valvula3', "manual":'Manual'};
 var comandos = [];
 var intentos = {};
+const CANT_MENSAJES = 15;
+var historial = [];
 
 var HOST = "ws://192.168.0.41:3000/client";
 var ws = new WebSocket(HOST);
@@ -32,7 +34,12 @@ ws.onmessage = function (event) {
 			}else{
 				intentos[comandos] = intentos[comandos] + 1;
 				ws.send(raspberryCommand[nombrePendiente] + "," + comandoPendiente);
-				console.log("Envio " + raspberryCommand[nombrePendiente] + "," + comandoPendiente);
+				var mensaje = "Se envio: " + raspberryCommand[nombrePendiente] + ", " ;
+				if(comandoPendiente == comandoPendiente.toUpperCase()) mensaje += "ON"
+				else mensaje += "OFF"
+				imprimirMensaje(mensaje);
+
+				console.log("Se envio: " + raspberryCommand[nombrePendiente] + "," + comandoPendiente);
 			}
 		}else{
 			if(previousEstados[estados[estado]] != currentEstados[estados[estado]]){
@@ -54,8 +61,27 @@ ws.onmessage = function (event) {
 		}
 	});
 
-	el.innerHTML = 'Server time: ' + event.data;
+	//el.innerHTML = 'Server time: ' + event.data;
 };
+
+function imprimirMensaje(texto){
+	if(historial.length > 0){
+		if(historial[0] != texto){
+			historial.unshift(texto);
+		}
+	}else{
+		historial.unshift(texto);
+	}
+
+	if(historial.length > CANT_MENSAJES){
+		historial.pop();
+	}
+	el.innerHTML = "";
+	historial.forEach(function(mensaje) {
+		el.innerHTML += mensaje + "<br>" ;
+	});
+
+}
 
 function getCurrentLetra(estado){
 	var currentEstado = "";
@@ -79,7 +105,17 @@ function getCurrentEstados(){
 	return currentEstados;
 }
 
-
+if($('#manual').is(':checked')){
+	$('#bomba').bootstrapToggle('enable');
+	$('#valvula1').bootstrapToggle('enable');
+	$('#valvula2').bootstrapToggle('enable');
+	$('#valvula3').bootstrapToggle('enable');
+}else{
+	$('#bomba').bootstrapToggle('disable');
+	$('#valvula1').bootstrapToggle('disable');
+	$('#valvula2').bootstrapToggle('disable');
+	$('#valvula3').bootstrapToggle('disable');
+}
 
 $(function() {
 	$('#manual').change(function() {
@@ -101,10 +137,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-$('#bomba').change(function() {
-	var comando = 'a';
-	if($('#bomba').is(':checked')) comando = comando.toUpperCase();
-	comando = "bomba" + "," + comando;
-	comandos.push(comando);
-	intentos[comando] = 0;
+var botones = Object.keys(letraComando);
+
+botones.forEach(function(boton) {
+	$('#'+boton).change(function() {
+		var comando = letraComando[boton];
+		if($('#'+boton).is(':checked')) comando = comando.toUpperCase();
+		comando = boton + "," + comando;
+		comandos.push(comando);
+		intentos[comando] = 0;
+	});
 });
