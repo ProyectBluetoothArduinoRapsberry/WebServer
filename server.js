@@ -24,19 +24,23 @@ wssRasp.on('connection', function connection(wsr) {
   wsr.on('message', function incoming(message) {
       wssClient.clients.forEach(function each(ws) {
         ws.send(message);
-        console.log('received: %s', message);
+        //console.log('received: %s', message);
       });
-      console.log('received: %s', message);
+      //console.log('received: %s', message);
   });
-  wssClient.on('message', function incoming(message) {
-    wssRasp.clients.forEach(function each(ws) {
-      ws.send(message);
+  wssClient.on('connection', function connection(wsc) {
+    console.log("test");
+    wsc.on('message', function incoming(message) {
+        wssRasp.clients.forEach(function each(ws) {
+          ws.send(message);
+          console.log("");
+          console.log('rasp: %s', message);
+        });
+        console.log('received: %s', message);
     });
+
   });
 });
-
-
-
 
 
 var parser = new xml2js.Parser();
