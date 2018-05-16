@@ -18,13 +18,14 @@ $('#bomba').bootstrapToggle('off');
 $('#valvula1').bootstrapToggle('off');
 $('#valvula2').bootstrapToggle('off');
 $('#valvula3').bootstrapToggle('off');
-$('#manual').bootstrapToggle('on');
+$('#manual').bootstrapToggle('off');
 $('#servidor').bootstrapToggle('off');
 
 $('#bomba').bootstrapToggle('disable');
 $('#valvula1').bootstrapToggle('disable');
 $('#valvula2').bootstrapToggle('disable');
 $('#valvula3').bootstrapToggle('disable');
+$('#manual').bootstrapToggle('disable');
 $('#servidor').bootstrapToggle('disable');
 
 
@@ -140,23 +141,12 @@ function getCurrentEstados(){
 	return currentEstados;
 }
 
-//$('#manual').parent().attr('class'));
 
-$(function() {
-	$('#manual').change(function() {
-		if($('#manual').is(':checked')){
-			$('#bomba').bootstrapToggle('enable');
-			$('#valvula1').bootstrapToggle('enable');
-			$('#valvula2').bootstrapToggle('enable');
-			$('#valvula3').bootstrapToggle('enable');
-		}else{
-			$('#bomba').bootstrapToggle('disable');
-			$('#valvula1').bootstrapToggle('disable');
-			$('#valvula2').bootstrapToggle('disable');
-			$('#valvula3').bootstrapToggle('disable');
-		}
-	})
-});
+
+$('#manual').click( function() {
+	 alert("test");
+ });
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -165,9 +155,9 @@ function sleep(ms) {
 var botones = Object.keys(letraComando);
 
 botones.forEach(function(boton) {
-	$('#'+boton).change(function() {
+	$('#'+boton+'b').click(function() {
 		var comando = letraComando[boton];
-		if($('#'+boton).is(':checked')) comando = comando.toUpperCase();
+		if($('#'+boton).is(':checked')==false) comando = comando.toUpperCase();
 		comando = boton + "," + comando;
 		comandos.push(comando);
 		intentos[comando] = 0;
