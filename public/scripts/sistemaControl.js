@@ -29,7 +29,7 @@ $('#manual').bootstrapToggle('disable');
 $('#servidor').bootstrapToggle('disable');
 
 
-var HOST = "ws://192.168.0.41:3000/client";
+var HOST = "ws://sistemacontrol.herokuapp.com/client";
 ws = new WebSocket(HOST);
 
 
@@ -140,12 +140,6 @@ function getCurrentEstados(){
 	currentEstados = currentEstados.substr(1, currentEstados.length);
 	return currentEstados;
 }
-
-
-
-$('#manual').click( function() {
-	 alert("test");
- });
 
 
 function sleep(ms) {
