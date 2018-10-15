@@ -1,5 +1,4 @@
-var estados = {"altura":0, "altura1":1, "distancia":2, "distancia1":3, "bomba":4, "valvula1":5, "valvula2":6, "valvula3":7, "RcvParametros":8, "manual":9};
-var distancias = {"distancia":"altura", "distancia1":"altura1"};
+var estados = {"distancia":0, "duracion":1, "trig":2, "eco":3, "bomba":4, "valvula1":5, "valvula2":6, "valvula3":7, "manual":8};
 var letraComando = {"bomba":'a', "valvula1":'b', "valvula2":'c', "valvula3":'d', "manual":'e'};
 var raspberryCommand = {"bomba":'Bomba', "valvula1":'Valvula1', "valvula2":'Valvula2', "valvula3":'Valvula3', "manual":'Manual'};
 var comandos = [];
@@ -8,7 +7,11 @@ const CANT_MENSAJES = 15;
 var historial = [];
 var ws = null;
 
+<<<<<<< HEAD
 
+var HOST = "ws://sistemacontrol.herokuapp.com/client";
+var ws = new WebSocket(HOST);
+=======
 $('#bomba').bootstrapToggle('enable');
 $('#valvula1').bootstrapToggle('enable');
 $('#valvula2').bootstrapToggle('enable');
@@ -30,8 +33,8 @@ $('#valvula3').bootstrapToggle('disable');
 $('#manual').bootstrapToggle('disable');
 $('#servidor').bootstrapToggle('disable');
 
-//var HOST = "ws://sistemacontrol.herokuapp.com/client";
-var HOST = "ws://192.168.0.6:3000/client";
+
+var HOST = "ws://192.168.0.41:3000/client";
 ws = new WebSocket(HOST);
 
 
@@ -46,12 +49,12 @@ function checkServer() {
 	$('#servidor').bootstrapToggle('disable');
 }
 
+>>>>>>> view
 
 var el = document.getElementById('messages');
 
 
 ws.onmessage = function (event) {
-
 	var previousEstados = getCurrentEstados().split(",");
 	var currentEstados = event.data.split(",");
 	var [nombrePendiente, comandoPendiente] = ["",""];
@@ -82,10 +85,8 @@ ws.onmessage = function (event) {
 			}
 		}else{
 			if(previousEstados[estados[estado]] != currentEstados[estados[estado]]){
-				if(estado.includes("distancia")){
-						var indexDistancia = estados[estado];
-						var indexAltura = estados[distancias[estado]];
-						$('#'+estado).text(currentEstados[indexDistancia] + "/" + currentEstados[indexAltura] );
+				if(estado == "distancia" || estado == "duracion"){
+						$('#'+estado).text(currentEstados[estados[estado]]);
 				}else{
 					//console.log(($('#valvula1').is(':disabled')));
 					if(($('#'+estado).is(':disabled'))){
@@ -136,7 +137,7 @@ function getCurrentEstados(){
 	var currentEstados = "";
 	for(var estado in estados){
 		currentEstados += ","
-		if(estado.includes("distancia") || estado.includes("altura")) currentEstados += $("#"+estado).text();
+		if(estado == "distancia" || estado == "duracion") currentEstados += $("#"+estado).text();
 		else{
 			if($('#'+estado).is(':checked')) currentEstados += "ON";
 			else currentEstados += "OFF";
@@ -147,6 +148,12 @@ function getCurrentEstados(){
 }
 
 
+
+$('#manual').click( function() {
+	 alert("test");
+ });
+
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -155,12 +162,10 @@ var botones = Object.keys(letraComando);
 
 botones.forEach(function(boton) {
 	$('#'+boton+'b').click(function() {
-		if(boton == "manual" || ($("#manual").is(':checked')) ){
-			var comando = letraComando[boton];
-			if($('#'+boton).is(':checked')==false) comando = comando.toUpperCase();
-			comando = boton + "," + comando;
-			comandos.push(comando);
-			intentos[comando] = 0;
-		}
+		var comando = letraComando[boton];
+		if($('#'+boton).is(':checked')==false) comando = comando.toUpperCase();
+		comando = boton + "," + comando;
+		comandos.push(comando);
+		intentos[comando] = 0;
 	});
 });
