@@ -83,6 +83,48 @@ const server = http.createServer(basic, (req, res) => {
       res.write(data);
       res.end();
     });
+  }else if(req.url.indexOf('nivel0.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel0.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }else if(req.url.indexOf('nivel1.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel1.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }else if(req.url.indexOf('nivel2.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel2.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }else if(req.url.indexOf('nivel3.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel3.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }else if(req.url.indexOf('nivel4.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel4.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }else if(req.url.indexOf('nivel5.png') != -1){ //req.url has the pathname, check if it conatins '.css'
+    fs.readFile(__dirname + '/public/images/NivelesTanque/nivel5.png', function (err, data) {
+      if (err) console.log(err);
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
   }else{
     fs.readFile('index.html', function(err, data) {
       res.writeHead(200, {'Content-Type': 'text/html'});

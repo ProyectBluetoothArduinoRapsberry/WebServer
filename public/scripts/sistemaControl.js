@@ -2,12 +2,15 @@ var estados = {"altura":0, "altura1":1, "distancia":2, "distancia1":3, "bomba":4
 var distancias = {"distancia":"altura", "distancia1":"altura1"};
 var letraComando = {"bomba":'a', "valvula1":'b', "valvula2":'c', "valvula3":'d', "manual":'e'};
 var raspberryCommand = {"bomba":'Bomba', "valvula1":'Valvula1', "valvula2":'Valvula2', "valvula3":'Valvula3', "manual":'Manual'};
+
+var nivelesTanque = ["images/NivelesTanque/nivel0.png", "images/NivelesTanque/nivel1.png", "images/NivelesTanque/nivel2.png",
+				 "images/NivelesTanque/nivel3.png", "images/NivelesTanque/nivel4.png", "images/NivelesTanque/nivel5.png"]
+
 var comandos = [];
 var intentos = {};
 const CANT_MENSAJES = 15;
 var historial = [];
 var ws = null;
-
 
 $('#bomba').bootstrapToggle('enable');
 $('#valvula1').bootstrapToggle('enable');
@@ -30,8 +33,8 @@ $('#valvula3').bootstrapToggle('disable');
 $('#manual').bootstrapToggle('disable');
 $('#servidor').bootstrapToggle('disable');
 
-//var HOST = "ws://sistemacontrol.herokuapp.com/client";
-var HOST = "ws://192.168.0.6:3000/client";
+var HOST = "ws://sistemacontrol.herokuapp.com/client";
+//var HOST = "ws://192.168.0.6:3000/client";
 ws = new WebSocket(HOST);
 
 
@@ -85,8 +88,11 @@ ws.onmessage = function (event) {
 				if(estado.includes("distancia")){
 						var indexDistancia = estados[estado];
 						var indexAltura = estados[distancias[estado]];
-						$('#'+estado).text(currentEstados[indexDistancia] + "/" + currentEstados[indexAltura] );
-				}else{
+						var nivelPorcentaje = parseFloat(currentEstados[indexDistancia]) / parseFloat(currentEstados[indexAltura]);
+						$('#'+estado).text(currentEstados[indexDistancia] + "/" + currentEstados[indexAltura]);
+						changeImageTanque(estado, nivelPorcentaje);
+
+				}else if(!estado.includes("altura")){
 					//console.log(($('#valvula1').is(':disabled')));
 					if(($('#'+estado).is(':disabled'))){
 						$('#'+estado).bootstrapToggle('enable');
@@ -164,3 +170,15 @@ botones.forEach(function(boton) {
 		}
 	});
 });
+
+function changeImageTanque(distancia, alturaPorcentaje){
+	var pathImage = getImageNivelTanque(alturaPorcentaje);
+	document.getElementById(distancia+"-tanque").src=pathImage;
+}
+
+function getImageNivelTanque(alturaPorcentaje){
+	if(alturaPorcentaje > 0.9999) alturaPorcentaje = 0.9999;
+	alturaPorcentaje = 0.9999 - alturaPorcentaje;
+	numberImage = alturaPorcentaje * nivelesTanque.length;
+	return nivelesTanque[parseInt(numberImage)];
+}
