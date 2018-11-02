@@ -21,7 +21,9 @@ var authenticated = false;
 
 wssRasp.on('connection', function connection(wsr) {
   wsr.send("test");
+  //console.log("test");
   wsr.on('message', function incoming(message) {
+      //console.log("MEnsaje: " + message);
       wssClient.clients.forEach(function each(ws) {
         ws.send(message);
         //console.log('received: %s', message);

@@ -33,8 +33,8 @@ $('#valvula3').bootstrapToggle('disable');
 $('#manual').bootstrapToggle('disable');
 $('#servidor').bootstrapToggle('disable');
 
-var HOST = "ws://sistemacontrol.herokuapp.com/client";
-//var HOST = "ws://192.168.0.6:3000/client";
+//var HOST = "ws://sistemacontrol.herokuapp.com/client";
+var HOST = "ws://192.168.0.30:3000/client";
 ws = new WebSocket(HOST);
 
 
@@ -58,23 +58,26 @@ ws.onmessage = function (event) {
 	var previousEstados = getCurrentEstados().split(",");
 	var currentEstados = event.data.split(",");
 	var [nombrePendiente, comandoPendiente] = ["",""];
-	if(comandos.length > 0) [nombrePendiente, comandoPendiente] = comandos[0].split(',');
-	if(comandos.length > 0)
-		console.log(comandos);
+	var comando = "";
+	if(comandos.length > 0){
+		comando = comandos[0];
+		[nombrePendiente, comandoPendiente] = comando.split(',');
+
+	}
 
 
 	Object.keys(estados).forEach(async function(estado) {
 
 		if(nombrePendiente == estado){
 			var previousComando = (currentEstados[estados[nombrePendiente]].trim().includes("ON")) ? letraComando[nombrePendiente].toUpperCase() : letraComando[nombrePendiente];
-			console.log(estado + " - " + comandos + " - " + "  (" + comandoPendiente + " , " + previousComando + ")");
-			if(comandoPendiente == previousComando || intentos[comandos] > 3){
-				var index = comandos.indexOf(comandos);
+			//console.log(estado + " - " + comandos + " - " + "  (" + comandoPendiente + " , " + previousComando + ") " + intentos + "|" + intentos[comandos]);
+			if(comandoPendiente == previousComando || intentos[comando] > 3){
+				var index = comandos.indexOf(comando);
 				comandos.splice(index,1);
-				delete intentos[comandos];
+				delete intentos[comando];
 				console.log("Se elimino " + previousComando);
 			}else{
-				intentos[comandos] = intentos[comandos] + 1;
+				intentos[comando] = intentos[comando] + 1;
 				ws.send(raspberryCommand[nombrePendiente] + "," + comandoPendiente);
 				var mensaje = "Se envio: " + raspberryCommand[nombrePendiente] + ", " ;
 				if(comandoPendiente == comandoPendiente.toUpperCase()) mensaje += "ON"
